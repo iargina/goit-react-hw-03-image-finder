@@ -1,0 +1,45 @@
+.searchbar {
+  width: 100%;
+}
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: rgb(0, 4, 252);
+  border-radius: 3px;
+  overflow: hidden;
+  padding: 10px;
+}
+.serchInput {
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  align-items: center;
+  min-height: 50px;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  color: rgb(0, 0, 0);
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+
+.searchButton {
+  display: inline-block;
+  width: 50px;
+  height: 70px;
+  border: 0;
+  background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg');
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 255, 0.274);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+}
