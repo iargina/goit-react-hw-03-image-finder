@@ -19,9 +19,9 @@ export class Modal extends Component {
     return;
   };
   render() {
-    const { largeSrc } = this.props;
+    const { largeSrc, modalClose } = this.props;
     return (
-      <div className={css.overlay}>
+      <div className={css.overlay} onClick={modalClose}>
         <div className={css.modal}>
           <img src={largeSrc.src} alt={largeSrc.alt} />
         </div>
