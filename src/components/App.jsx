@@ -18,12 +18,13 @@ export class App extends Component {
     largeImg: null,
   };
 
-  onSubmit = ev => {
+  onSubmit = ({ text }) => {
     this.setState({
-      query: ev.text,
+      query: text,
       images: [],
       page: 1,
       totalPages: 0,
+      error: '',
     });
   };
   modalClose = () => {
@@ -39,15 +40,17 @@ export class App extends Component {
     this.setState({ loading: true });
 
     try {
-      const { photos, total_results } = await getImagesArr(query, page);
+      const { finalPhotos, total_results } = await getImagesArr(query, page);
       this.setState(prevState => {
         return {
-          images: [...prevState.images, ...photos],
+          images: [...prevState.images, ...finalPhotos],
           totalPages: Math.floor(total_results / 12),
         };
       });
     } catch (error) {
-      console.log(error);
+      this.setState({
+        error: 'You did something strange. Try again or contact us',
+      });
     } finally {
       this.setState({ loading: false });
     }
@@ -65,27 +68,29 @@ export class App extends Component {
   };
 
   render() {
+    const { page, images, totalPages, loading, largeImg, error } = this.state;
     return (
       <div className={css.mainDiv}>
         <SearchBar onSubmit={this.onSubmit} />
 
-        {this.state.images.length > 0 && (
+        {images.length > 0 ? (
           <>
             <ImageGallery>
               <ImageGalleryItem
-                imagesArr={this.state.images}
+                imagesArr={images}
                 onClickImg={this.onClickImg}
               />
             </ImageGallery>
-            {this.state.totalPages > this.state.page && !this.state.loading && (
+            {totalPages > page && !loading && (
               <Button loadMoreClick={this.loadMoreClick} />
             )}
           </>
+        ) : (
+          <h3>There is no images here. Type or refine your search query</h3>
         )}
-        {this.state.loading && <Loader />}
-        {this.state.largeImg && (
-          <Modal largeSrc={this.state.largeImg} modalClose={this.modalClose} />
-        )}
+        {error && <p>{error}</p>}
+        {loading && <Loader />}
+        {largeImg && <Modal largeSrc={largeImg} modalClose={this.modalClose} />}
       </div>
     );
   }

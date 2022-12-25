@@ -1,9 +1,4 @@
-import axios from 'axios';
 import { createClient } from 'pexels';
-
-const API_KEY = '563492ad6f91700001000001a1215475e7a64958baadc8684534de88';
-axios.defaults.baseURL = 'https://api.pexels.com/v1';
-axios.defaults.headers.common['Authorization'] = API_KEY;
 
 export const getImagesArr = async (query, page) => {
   const params = {
@@ -16,11 +11,21 @@ export const getImagesArr = async (query, page) => {
     '563492ad6f91700001000001a1215475e7a64958baadc8684534de88'
   );
   try {
-    const data = await client.photos.search(params).then(response => {
-      const { page, photos, total_results } = response;
-      return { page, photos, total_results };
-    });
-    return data;
+    const data = await client.photos.search(params);
+    const total_results = data.total_results;
+    const finalPhotos = data.photos.map(
+      ({ id, alt, src: { medium, large } }) => ({
+        id,
+        alt,
+        medium,
+        large,
+      })
+    );
+    return {
+      page,
+      finalPhotos,
+      total_results,
+    };
   } catch (error) {
     console.error(error);
   }

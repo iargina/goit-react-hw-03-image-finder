@@ -2,11 +2,7 @@ import css from './ImageGalleryItem.module.css';
 
 export const ImageGalleryItem = ({ imagesArr, onClickImg }) => {
   return imagesArr.map(image => {
-    const {
-      id,
-      src: { medium, large },
-      alt,
-    } = image;
+    const { id, medium, large, alt } = image;
     return (
       <li
         key={id}
